@@ -110,7 +110,7 @@ class Taximeter:
             self.__seconds_stopped = self.__seconds_stopped + (self.__stop_time - self.__start_time)
             self.__status = Status.WAITING
             self.__total_fare = self.__calculate_fare()
-            print(f"Seconds taximeter was paused: {self.__seconds_stopped: .1f}")
+            print(f"\nSeconds taximeter was paused: {self.__seconds_stopped: .1f}")
             print(f"Seconds taximeter was running: {self.__seconds_moving: .1f}\n")
             print(f"Total to pay: {self.__total_fare: .2f}€")
             self.__seconds_moving = 0

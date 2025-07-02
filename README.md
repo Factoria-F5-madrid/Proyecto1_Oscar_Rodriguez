@@ -4,6 +4,9 @@ simulates the case when a new customer gets into the taxi), change the status of
 taximeter from stopped (taxi is not moving) to moving (taxi is moving) and to end the 
 taximeter (simulates the customer getting out of the taxi and paying the fare).
 
+The taximeter has a log system to keep track of the events that occur in the application. In addition, 
+any error messages are also displayed on the screen.
+
 ### Running the application
 First, you have to make sure that the virtual environment is activated before running
 the application, to do that, enter the following command from the command line:
