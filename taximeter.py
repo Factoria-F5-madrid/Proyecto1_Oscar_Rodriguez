@@ -46,21 +46,25 @@ class Taximeter:
         print("\nAvailable commands:")
         print("fare_stopped, fare_moving, start, move, stop, end, quit, help")
 
-    def run(self):
+    def run(self, cmd):
         self.__logger.debug("In Taximeter.run")
-        self.__show_help()
 
-        while self.__status != Status.QUIT:
-            cmd = input("\nPlease enter a command (" + Status.show(self.__status) + "): ")
-            self.__process_command(cmd.split())
+        if cmd is not None:
+                self.__process_command(cmd.split())
+        else:
+            self.__show_help()
+            while self.__status != Status.QUIT:
+                cmd = input("\nPlease enter a command (" + Status.show(self.__status) + "): ")
+                self.__process_command(cmd.split())
 
-        print("Thank you for using the taximeter application!")
+            print("Thank you for using the taximeter application!")
 
     def __set_stopped_fare(self, new_fare):
         self.__logger.debug("In Taximeter.set_stopped_fare %s", new_fare)
         if self.__status == Status.WAITING:
             self.__fare_stopped = int(new_fare)
             print("The fare when the taxi is stopped is now: " + str(self.__fare_stopped) + " cents.")
+            self.__logger.debug(f"New stopped fare: {self.__fare_stopped}")
         else:
             self.__error(Error.FARE_CANNOT_BE_CHANGED)
 
@@ -69,6 +73,7 @@ class Taximeter:
         if self.__status == Status.WAITING:
             self.__fare_moving = int(new_fare)
             print("The fare when the taxi is moving is now: " + str(self.__fare_moving) + " cents.")
+            self.__logger.debug(f"New moving fare: {self.__fare_moving}")
         else:
             self.__error(Error.FARE_CANNOT_BE_CHANGED)
 
@@ -113,6 +118,7 @@ class Taximeter:
             print(f"\nSeconds taximeter was paused: {self.__seconds_stopped: .1f}")
             print(f"Seconds taximeter was running: {self.__seconds_moving: .1f}\n")
             print(f"Total to pay: {self.__total_fare: .2f}€")
+            self.__logger.debug(f"{self.__total_fare: .2f}")
             self.__seconds_moving = 0
             self.__seconds_stopped = 0
             self.__total_fare = 0
@@ -148,6 +154,8 @@ class Taximeter:
                 self.__stop()
             case "end":
                 self.__end()
+            case "wait":
+                time.sleep(int(cmd[1]))
             case "quit":
                 if self.__status == Status.WAITING:
                     self.__status = Status.QUIT

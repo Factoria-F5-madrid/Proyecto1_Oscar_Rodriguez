@@ -48,5 +48,4 @@ if __name__ == '__main__':
     taximeter = Taximeter(logger)
 
     logger.debug("Starting the application.")
-    taximeter.run()
-    logger.debug("The application has ended successfully.")
+    taximeter.run(None)
