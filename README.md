@@ -27,3 +27,30 @@ You should see the following on your terminal window:
 ![alt text](images/main.png)
 
 From here you can play with the taximeter application. Have fun!
+
+### Run the unit tests
+To run the unit tests, run the following command from the command line:
+
+`python -m unittest discover -s test`
+
+Where "test" is the directory where the test files are located. If all the tests are executed
+fine, you should see something like this (don't forget to activate the virtual environment):
+
+```
+Ran 10 tests in 2.003s
+
+OK
+```
+
+If any of the tests fail, you should see something like this. Check the output for information about
+the error or errors:
+
+```
+.
+.
+.
+Ran 10 tests in 2.004s
+
+FAILED (failures=1)
+```
+
