@@ -9,6 +9,11 @@ class Taximeter:
     FARE_MOVING  = 5
 
     def __init__(self, logger):
+        """
+        Initializes the class
+
+        :param logger: Used to write message to the log
+        """
         self.__logger = logger
         self.__logger.debug("In Taximeter.init")
         self.__status = Status.WAITING
@@ -21,10 +26,21 @@ class Taximeter:
         self.__stop_time = 0
 
     def __error(self,error_number):
+        """
+        Writes an error message
+
+        :param error_number: The error code to be displayed
+        :return:
+        """
         self.__logger.debug("In Taximeter.error")
         Error.show(self.__logger, error_number)
 
     def __show_help(self):
+        """
+        Shows help on the screen
+
+        :return:
+        """
         self.__logger.debug("In Taximeter.show_help")
         print("The following commands are available:")
         print()
@@ -42,11 +58,23 @@ class Taximeter:
         print("- help.                  Shows list of commands.")
 
     def __show_commands(self):
+        """
+        Shows the available commands on the screen
+
+        :return:
+        """
         self.__logger.debug("In Taximeter.show_commands")
         print("\nAvailable commands:")
         print("fare_stopped, fare_moving, start, move, stop, end, quit, help")
 
     def run(self, cmd):
+        """
+        Runs the taximeter. The taximeter will keep running until the command
+        'quit' is entered.
+
+        :param cmd: One of the valid commands for the taximeter, if any
+        :return:
+        """
         self.__logger.debug("In Taximeter.run")
 
         if cmd is not None:
@@ -60,6 +88,12 @@ class Taximeter:
             print("Thank you for using the taximeter application!")
 
     def __set_stopped_fare(self, new_fare):
+        """
+        Sets the fare when the taximeter is stopped.
+
+        :param new_fare: The new fare value
+        :return:
+        """
         self.__logger.debug("In Taximeter.set_stopped_fare %s", new_fare)
         if self.__status == Status.WAITING:
             self.__fare_stopped = int(new_fare)
@@ -69,6 +103,12 @@ class Taximeter:
             self.__error(Error.FARE_CANNOT_BE_CHANGED)
 
     def __set_moving_fare(self, new_fare):
+        """
+        Sets the fare when the taximeter is running
+
+        :param new_fare: The new fare value
+        :return:
+        """
         self.__logger.debug("In Taximeter.set_moving_fare %s", new_fare)
         if self.__status == Status.WAITING:
             self.__fare_moving = int(new_fare)
@@ -78,6 +118,12 @@ class Taximeter:
             self.__error(Error.FARE_CANNOT_BE_CHANGED)
 
     def __start(self):
+        """
+        Starts the taximeter only if the status is WAITING. Sets the
+        status to STOPPED and reset the seconds counter
+
+        :return:
+        """
         self.__logger.debug("In Taximeter.start")
         if self.__status == Status.WAITING:
             self.__status = Status.STOPPED
@@ -86,6 +132,14 @@ class Taximeter:
             self.__error(Error.TRIP_IN_PROGRESS)
 
     def __move(self):
+        """
+        Sets the status to MOVING only if status is STOPPED.
+
+        Adds the total number of seconds to the stopped counter and
+        resets the seconds counter
+
+        :return:
+        """
         self.__logger.debug("In Taximeter.move")
         if self.__status == Status.STOPPED:
             self.__stop_time = time.time()
@@ -96,6 +150,14 @@ class Taximeter:
             self.__error(Error.TAXI_IS_NOT_STOPPED)
 
     def __stop(self):
+        """
+        Set the status to STOPPED only the status is MOVING.
+
+        Adds the total number of seconds to the moving counter and
+        reset the seconds counter
+
+        :return:
+        """
         self.__logger.debug("In Taximeter.stop")
         if self.__status == Status.MOVING:
             self.__stop_time = time.time()
@@ -106,6 +168,15 @@ class Taximeter:
             self.__error(Error.TAXI_IS_NOT_MOVING)
 
     def __end(self):
+        """
+        Set the status to WAITING if the status is STOPPED. if the status
+        is MOVING, call the stop() method.
+
+        Computes the total number of seconds stopped, display the total number
+        of seconds moving and stopped and the total amount to pay in €.
+
+        :return:
+        """
         self.__logger.debug("In Taximeter.end")
         if self.__status == Status.MOVING:
             self.__stop()
@@ -126,10 +197,22 @@ class Taximeter:
             self.__error(Error.TAXI_IS_NOT_STOPPED)
 
     def __calculate_fare(self):
+        """
+        Computes the total amount to pay
+
+        :return:
+        """
         self.__logger.debug("In Taximeter.calculate_fare")
         return (self.__seconds_moving * self.__fare_moving + self.__seconds_stopped * self.__fare_stopped) / 100
 
     def __process_command(self, cmd):
+        """
+        Keeps processing commands entered by the user (or by the parameter cmd) till
+        the command 'quit' is entered
+
+        :param cmd: Command to process (used by unit testing)
+        :return:
+        """
         self.__logger.debug("In Taximeter.process_command")
         if len(cmd) == 0:
             self.__show_commands()
