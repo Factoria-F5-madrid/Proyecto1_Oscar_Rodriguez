@@ -5,6 +5,13 @@ from taximeter import Taximeter
 
 
 def set_log():
+    """
+    Created a log to be used by the application. The log has two outputs:
+    one that writes all messages to a log file (DEBUG) and one that writes
+    error messages to the console (ERROR)
+
+    :return: The log
+    """
     logging_config = {
         'version': 1,
         'disable_existing_loggers': False,
