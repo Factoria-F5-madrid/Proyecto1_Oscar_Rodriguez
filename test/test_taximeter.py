@@ -39,7 +39,7 @@ class TestApplication(unittest.TestCase):
         log = log_data.getvalue().split("\n")
         result = log[len(log) - 9].strip()
 
-        self.assertEqual(result, "New stopped fare: 10")
+        self.assertEqual("New stopped fare: 10", result)
 
     def test_start_stopped_for_1_second(self):
         log_data = StringIO()
@@ -51,7 +51,7 @@ class TestApplication(unittest.TestCase):
 
         log = log_data.getvalue().split("\n")
         result = log[len(log) - 4].strip()
-        self.assertEqual(result, "0.02")
+        self.assertEqual("0.02", result)
 
     def test_start_stopped_move_for_1_second(self):
         log_data = StringIO()
@@ -65,7 +65,7 @@ class TestApplication(unittest.TestCase):
 
         log = log_data.getvalue().split("\n")
         result = log[len(log) - 4].strip()
-        self.assertEqual(result, "0.05")
+        self.assertEqual("0.05", result)
 
     def test_error_moving_fare_cannot_be_changed(self):
         log_data = StringIO()
@@ -76,7 +76,7 @@ class TestApplication(unittest.TestCase):
 
         log = log_data.getvalue().split("\n")
         result = log[len(log) - 4]
-        self.assertEqual(result, "The fare cannot be changed once the trip has started.")
+        self.assertEqual("The fare cannot be changed once the trip has started.", result)
 
     def test_error_stopped_fare_cannot_be_changed(self):
         log_data = StringIO()
@@ -87,7 +87,7 @@ class TestApplication(unittest.TestCase):
 
         log = log_data.getvalue().split("\n")
         result = log[len(log) - 4]
-        self.assertEqual(result, "The fare cannot be changed once the trip has started.")
+        self.assertEqual("The fare cannot be changed once the trip has started.", result)
 
     def test_error_moving_fare_amount_missing(self):
         log_data = StringIO()
@@ -98,7 +98,7 @@ class TestApplication(unittest.TestCase):
 
         log = log_data.getvalue().split("\n")
         result = log[len(log) - 4]
-        self.assertEqual(result, "The new fare amount is missing.")
+        self.assertEqual("The new fare amount is missing.", result)
 
     def test_error_stopped_fare_amount_missing(self):
         log_data = StringIO()
@@ -109,7 +109,7 @@ class TestApplication(unittest.TestCase):
 
         log = log_data.getvalue().split("\n")
         result = log[len(log) - 4]
-        self.assertEqual(result, "The new fare amount is missing.")
+        self.assertEqual("The new fare amount is missing.", result)
 
     def test_error_trip_started(self):
         log_data = StringIO()
@@ -120,7 +120,7 @@ class TestApplication(unittest.TestCase):
 
         log = log_data.getvalue().split("\n")
         result = log[len(log) - 4]
-        self.assertEqual(result, "Cannot start a trip if there is already a trip in progress.")
+        self.assertEqual("Cannot start a trip if there is already a trip in progress.", result)
 
     def test_error_trip_not_started(self):
         log_data = StringIO()
@@ -130,7 +130,7 @@ class TestApplication(unittest.TestCase):
 
         log = log_data.getvalue().split("\n")
         result = log[len(log) - 4]
-        self.assertEqual(result, "Taximeter is not stopped, or trip is not started.")
+        self.assertEqual("Taximeter is not stopped, or trip is not started.", result)
 
 if __name__ == "__main__":
     unittest.main()
