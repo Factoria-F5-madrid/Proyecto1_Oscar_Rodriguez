@@ -15,7 +15,7 @@ class Taximeter:
         :param logger: Used to write message to the log
         """
         self.__logger = logger
-        self.__logger.debug("In Taximeter.init")
+        self.__logger.get_log().debug("In Taximeter.init")
         self.__status = Status.WAITING
         self.__fare_moving = self.FARE_MOVING
         self.__fare_stopped = self.FARE_STOPPED
@@ -24,6 +24,7 @@ class Taximeter:
         self.__seconds_stopped = 0
         self.__start_time = 0
         self.__stop_time = 0
+        self.__last_error = ""
 
     def __error(self,error_number):
         """
@@ -32,8 +33,8 @@ class Taximeter:
         :param error_number: The error code to be displayed
         :return:
         """
-        self.__logger.debug("In Taximeter.error")
-        Error.show(self.__logger, error_number)
+        self.__logger.get_log().debug("In Taximeter.error")
+        self.__last_error = Error.show(self.__logger, error_number)
 
     def __show_help(self):
         """
@@ -41,7 +42,7 @@ class Taximeter:
 
         :return:
         """
-        self.__logger.debug("In Taximeter.show_help")
+        self.__logger.get_log().debug("In Taximeter.show_help")
         print("The following commands are available:")
         print()
         print("- fare_stopped <number>. Sets the amount in cents per second that the customer will be")
@@ -63,7 +64,7 @@ class Taximeter:
 
         :return:
         """
-        self.__logger.debug("In Taximeter.show_commands")
+        self.__logger.get_log().debug("In Taximeter.show_commands")
         print("\nAvailable commands:")
         print("fare_stopped, fare_moving, start, move, stop, end, quit, help")
 
@@ -75,7 +76,7 @@ class Taximeter:
         :param cmd: One of the valid commands for the taximeter, if any
         :return:
         """
-        self.__logger.debug("In Taximeter.run")
+        self.__logger.get_log().debug("In Taximeter.run")
 
         if cmd is not None:
                 self.__process_command(cmd.split())
@@ -94,11 +95,11 @@ class Taximeter:
         :param new_fare: The new fare value
         :return:
         """
-        self.__logger.debug("In Taximeter.set_stopped_fare %s", new_fare)
+        self.__logger.get_log().debug("In Taximeter.set_stopped_fare %s", new_fare)
         if self.__status == Status.WAITING:
             self.__fare_stopped = int(new_fare)
             print("The fare when the taxi is stopped is now: " + str(self.__fare_stopped) + " cents.")
-            self.__logger.debug(f"New stopped fare: {self.__fare_stopped}")
+            self.__logger.get_log().debug(f"New stopped fare: {self.__fare_stopped}")
         else:
             self.__error(Error.FARE_CANNOT_BE_CHANGED)
 
@@ -109,11 +110,11 @@ class Taximeter:
         :param new_fare: The new fare value
         :return:
         """
-        self.__logger.debug("In Taximeter.set_moving_fare %s", new_fare)
+        self.__logger.get_log().debug("In Taximeter.set_moving_fare %s", new_fare)
         if self.__status == Status.WAITING:
             self.__fare_moving = int(new_fare)
             print("The fare when the taxi is moving is now: " + str(self.__fare_moving) + " cents.")
-            self.__logger.debug(f"New moving fare: {self.__fare_moving}")
+            self.__logger.get_log().debug(f"New moving fare: {self.__fare_moving}")
         else:
             self.__error(Error.FARE_CANNOT_BE_CHANGED)
 
@@ -124,7 +125,7 @@ class Taximeter:
 
         :return:
         """
-        self.__logger.debug("In Taximeter.start")
+        self.__logger.get_log().debug("In Taximeter.start")
         if self.__status == Status.WAITING:
             self.__status = Status.STOPPED
             self.__start_time = time.time()
@@ -140,7 +141,7 @@ class Taximeter:
 
         :return:
         """
-        self.__logger.debug("In Taximeter.move")
+        self.__logger.get_log().debug("In Taximeter.move")
         if self.__status == Status.STOPPED:
             self.__stop_time = time.time()
             self.__seconds_stopped = self.__seconds_stopped + (self.__stop_time - self.__start_time)
@@ -158,7 +159,7 @@ class Taximeter:
 
         :return:
         """
-        self.__logger.debug("In Taximeter.stop")
+        self.__logger.get_log().debug("In Taximeter.stop")
         if self.__status == Status.MOVING:
             self.__stop_time = time.time()
             self.__seconds_moving = self.__seconds_moving + (self.__stop_time - self.__start_time)
@@ -177,7 +178,7 @@ class Taximeter:
 
         :return:
         """
-        self.__logger.debug("In Taximeter.end")
+        self.__logger.get_log().debug("In Taximeter.end")
         if self.__status == Status.MOVING:
             self.__stop()
 
@@ -189,7 +190,7 @@ class Taximeter:
             print(f"\nSeconds taximeter was paused: {self.__seconds_stopped: .1f}")
             print(f"Seconds taximeter was running: {self.__seconds_moving: .1f}\n")
             print(f"Total to pay: {self.__total_fare: .2f}€")
-            self.__logger.debug(f"{self.__total_fare: .2f}")
+            self.__logger.get_log().debug(f"{self.__total_fare: .2f}")
             self.__seconds_moving = 0
             self.__seconds_stopped = 0
             self.__total_fare = 0
@@ -202,7 +203,7 @@ class Taximeter:
 
         :return:
         """
-        self.__logger.debug("In Taximeter.calculate_fare")
+        self.__logger.get_log().debug("In Taximeter.calculate_fare")
         return (self.__seconds_moving * self.__fare_moving + self.__seconds_stopped * self.__fare_stopped) / 100
 
     def __process_command(self, cmd):
@@ -213,7 +214,7 @@ class Taximeter:
         :param cmd: Command to process (used by unit testing)
         :return:
         """
-        self.__logger.debug("In Taximeter.process_command")
+        self.__logger.get_log().debug("In Taximeter.process_command")
         if len(cmd) == 0:
             self.__show_commands()
             return

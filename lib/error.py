@@ -12,14 +12,14 @@ class Error(Enum):
     def show(cls,logger,code):
         match code:
             case Error.FARE_CANNOT_BE_CHANGED:
-                logger.error("The fare cannot be changed once the trip has started.")
+                logger.get_log().error("The fare cannot be changed once the trip has started.")
             case Error.FARE_MISSING:
-                logger.error("The new fare amount is missing.")
+                logger.get_log().error("The new fare amount is missing.")
             case Error.TRIP_IN_PROGRESS:
-                logger.error("Cannot start a trip if there is already a trip in progress.")
+                logger.get_log().error("Cannot start a trip if there is already a trip in progress.")
             case Error.TAXI_IS_NOT_STOPPED:
-                logger.error("Taximeter is not stopped, or trip is not started.")
+                logger.get_log().error("Taximeter is not stopped, or trip is not started.")
             case Error.TAXI_IS_NOT_MOVING:
-                logger.error("Taximeter is not moving, or trip is not started.")
+                logger.get_log().error("Taximeter is not moving, or trip is not started.")
             case _:
-                logger.error("Unknown error!")
+                logger.get_log().error("Unknown error!")
