@@ -1,10 +1,8 @@
-import unittest
-
 from lib.logger import Logger
 from taximeter import Taximeter
 
 
-class TestApplication(unittest.TestCase):
+class TestApplication():
     logger = Logger()
 
     def test_set_moving_fare(self):
@@ -16,7 +14,7 @@ class TestApplication(unittest.TestCase):
         log = self.logger.get_log_data().getvalue().split("\n")
         result = log[len(log) - 9].strip()
 
-        self.assertEqual(result, "New moving fare: 20")
+        assert result == "New moving fare: 20"
 
     def test_set_stopped_fare(self):
         taximeter = Taximeter(self.logger)
@@ -27,7 +25,7 @@ class TestApplication(unittest.TestCase):
         log = self.logger.get_log_data().getvalue().split("\n")
         result = log[len(log) - 9].strip()
 
-        self.assertEqual("New stopped fare: 10", result)
+        assert result == "New stopped fare: 10"
 
     def test_start_stopped_for_1_second(self):
         taximeter = Taximeter(self.logger)
@@ -38,7 +36,7 @@ class TestApplication(unittest.TestCase):
 
         log = self.logger.get_log_data().getvalue().split("\n")
         result = log[len(log) - 4].strip()
-        self.assertEqual("0.02", result)
+        assert result == "0.02", result
 
     def test_start_stopped_move_for_1_second(self):
         taximeter = Taximeter(self.logger)
@@ -51,7 +49,7 @@ class TestApplication(unittest.TestCase):
 
         log = self.logger.get_log_data().getvalue().split("\n")
         result = log[len(log) - 4].strip()
-        self.assertEqual("0.05", result)
+        assert result == "0.05", result
 
     def test_error_moving_fare_cannot_be_changed(self):
         taximeter = Taximeter(self.logger)
@@ -61,7 +59,7 @@ class TestApplication(unittest.TestCase):
 
         log = self.logger.get_log_data().getvalue().split("\n")
         result = log[len(log) - 4]
-        self.assertEqual("The fare cannot be changed once the trip has started.", result)
+        assert result == "The fare cannot be changed once the trip has started."
 
     def test_error_stopped_fare_cannot_be_changed(self):
         taximeter = Taximeter(self.logger)
@@ -71,7 +69,7 @@ class TestApplication(unittest.TestCase):
 
         log = self.logger.get_log_data().getvalue().split("\n")
         result = log[len(log) - 4]
-        self.assertEqual("The fare cannot be changed once the trip has started.", result)
+        assert result == "The fare cannot be changed once the trip has started.", result
 
     def test_error_moving_fare_amount_missing(self):
         taximeter = Taximeter(self.logger)
@@ -81,7 +79,7 @@ class TestApplication(unittest.TestCase):
 
         log = self.logger.get_log_data().getvalue().split("\n")
         result = log[len(log) - 4]
-        self.assertEqual("The new fare amount is missing.", result)
+        assert result == "The new fare amount is missing."
 
     def test_error_stopped_fare_amount_missing(self):
         taximeter = Taximeter(self.logger)
@@ -91,7 +89,7 @@ class TestApplication(unittest.TestCase):
 
         log = self.logger.get_log_data().getvalue().split("\n")
         result = log[len(log) - 4]
-        self.assertEqual("The new fare amount is missing.", result)
+        assert result == "The new fare amount is missing."
 
     def test_error_trip_started(self):
         taximeter = Taximeter(self.logger)
@@ -101,7 +99,7 @@ class TestApplication(unittest.TestCase):
 
         log = self.logger.get_log_data().getvalue().split("\n")
         result = log[len(log) - 4]
-        self.assertEqual("Cannot start a trip if there is already a trip in progress.", result)
+        assert result == "Cannot start a trip if there is already a trip in progress.", result
 
     def test_error_trip_not_started(self):
         taximeter = Taximeter(self.logger)
@@ -110,7 +108,4 @@ class TestApplication(unittest.TestCase):
 
         log = self.logger.get_log_data().getvalue().split("\n")
         result = log[len(log) - 4]
-        self.assertEqual("Taximeter is not stopped, or trip is not started.", result)
-
-if __name__ == "__main__":
-    unittest.main()
+        assert result == "Taximeter is not stopped, or trip is not started."
