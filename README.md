@@ -58,7 +58,7 @@ From here you can play with the taximeter application. Have fun!
 
 ## Run the unit tests
 We are assuming that the user has already cloned the repository, created a virtual environment, activated it
-and installed the requirements. If not, please check `Running the application` section.
+and installed the requirements. If not, please check [Running the application](#running-the-application) section.
 
 To run the unit tests, run the following command from the command line:
 
@@ -108,8 +108,8 @@ The structure of the code looks like this:
 ├── taximeter.log
 ├── taximeter.py
 └── test
+    ├── __init__.py
     └── test_taximeter.py
-
 ```
 
 ### The `lib` directory
@@ -123,8 +123,8 @@ can take, plus a method to show the current status in the application. There is 
 called `QUIT` that will be used to indicate the user wants to exit from the application.
 
 ### The `test` directory
-The `test` directory has all the code related to unit testing the application (see `run the unit
-tests` in the documentation.)
+The `test` directory has all the code related to unit testing the application (see [Run the unit tests](#run-the-unit-tests)
+in the documentation.)
 
 ### The `main` directory
 The main directory has to files (plus the log file if the application has been run at least once),
