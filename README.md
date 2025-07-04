@@ -10,10 +10,14 @@ any error messages are also displayed on the screen. Classes and Enums have been
 application.
 
 ## Running the application
-First, you have to make sure that the virtual environment is activated before running
-the application, to do that, enter the following command from the command line:
+Please clone this repo in your computer (follow github instructions) and create a virtual environment using
+the following command:
 
-`source .venv/bin/activate`
+`bash-5.2$ python3 -m venv .venv`
+
+Once the virtual environment has been created, activate it:
+
+`bash-5.2$ source .venv/bin/activate`
 
 If everything is fine, you should see something similar to this:
 
@@ -21,9 +25,11 @@ If everything is fine, you should see something similar to this:
 bash-5.2$ source .venv/bin/activate
 (.venv) bash-5.2
 ``` 
+Install the requirements:
 
-Once the virtual environment has been activated, you can run the application with the
-following command:
+`(.venv) bash-5.2$ pip install -r requirements.txt `
+
+No errors should appear. Once the requirements have been installed, you can run the application:
 
 `python main.py`
 
@@ -51,29 +57,40 @@ Please enter a command (trip not started):
 From here you can play with the taximeter application. Have fun!
 
 ## Run the unit tests
+We are assuming that the user has already cloned the repository, created a virtual environment, activated it
+and installed the requirements. If not, please check `Running the application` section.
+
 To run the unit tests, run the following command from the command line:
 
-`python -m unittest discover -s test`
+`bash-5.2$ pytest`
 
 Where "test" is the directory where the test files are located. If all the tests are executed
 fine, you should see something like this (don't forget to activate the virtual environment):
 
 ```
-Ran 10 tests in 2.003s
+(.venv) bash-5.2$ pytest
+================================= test session starts =================================
+platform linux -- Python 3.13.3, pytest-8.4.1, pluggy-1.6.0
+rootdir: /home/oscarro/Development/IA/Modulo1/Proyecto1_Oscar_Rodriguez
+collected 10 items                                                                    
 
-OK
+test/test_taximeter.py ..........                                               [100%]
+
+================================= 10 passed in 2.02s ==================================
 ```
 
 If any of the tests fail, you should see something like this. Check the output for information about
 the error or errors:
 
 ```
+(.venv) bash-5.2$ pytest
 .
 .
 .
-Ran 10 tests in 2.004s
-
-FAILED (failures=1)
+=============================== short test summary info ===============================
+FAILED test/test_taximeter.py::TestApplication::test_set_moving_fare - AssertionError: 
+assert 'New moving fare: 20' == 'New moving fare: 201'
+============================= 1 failed, 9 passed in 2.07s =============================
 ```
 
 ## The code

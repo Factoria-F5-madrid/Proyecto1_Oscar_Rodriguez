@@ -2,7 +2,6 @@ import logging
 import logging.config
 from io import StringIO
 
-
 class Logger:
     def __init__(self, log_name = "unit_test"):
         if log_name == "unit_test":
@@ -11,6 +10,12 @@ class Logger:
         self.__init_production(log_name)
 
     def __init_production(self, log_name):
+        """
+        Creates a logger for production environment.
+
+        :param log_name: Name the logger will be using
+        :return:
+        """
         logging_config = {
             'version': 1,
             'disable_existing_loggers': False,
@@ -45,6 +50,11 @@ class Logger:
         self.__log = logging.getLogger(log_name)
 
     def __init_unit_test(self):
+        """
+        Creates a logger for unit test.
+
+        :return:
+        """
         self.__data = StringIO()
 
         handler = logging.StreamHandler(self.__data)
@@ -57,8 +67,18 @@ class Logger:
         self.__log = my_logger
 
     def get_log(self):
+        """
+        Gets the logger object.
+
+        :return: The logger object
+        """
         return self.__log
 
     def get_log_data(self):
+        """
+        Gets the logger buffer object when doing unit testing
+
+        :return: The buffer object
+        """
         return self.__data
 
