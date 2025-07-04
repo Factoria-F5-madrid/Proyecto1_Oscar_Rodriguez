@@ -83,6 +83,7 @@ The structure of the code looks like this:
 .
 ├── lib
 │   ├── error.py
+│   ├── logger.py
 │   └── status.py
 ├── LICENSE
 ├── main.py
