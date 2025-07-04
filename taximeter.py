@@ -68,7 +68,7 @@ class Taximeter:
         print("\nAvailable commands:")
         print("fare_stopped, fare_moving, start, move, stop, end, quit, help")
 
-    def run(self, cmd):
+    def run(self, cmd=None):
         """
         Runs the taximeter. The taximeter will keep running until the command
         'quit' is entered.
