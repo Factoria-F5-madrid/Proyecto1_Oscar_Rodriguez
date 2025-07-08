@@ -1,1 +1,46 @@
+name: 🧩 Feature Request
+description: Sugerir una nueva funcionalidad para el proyecto
+title: "[Feature] - "
+labels: [enhancement]
+assignees: []
 
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ¡Gracias por contribuir! Por favor, completa la siguiente información para describir tu propuesta de funcionalidad.
+
+  - type: input
+    id: feature_title
+    attributes:
+      label: Título de la funcionalidad
+      placeholder: Breve descripción del feature
+    validations:
+      required: true
+
+  - type: textarea
+    id: feature_description
+    attributes:
+      label: Descripción detallada
+      placeholder: ¿Qué hace esta funcionalidad? ¿Por qué es útil?
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivación
+      placeholder: ¿Qué problema soluciona o qué necesidad cubre?
+    validations:
+      required: false
+
+  - type: dropdown
+    id: prioridad
+    attributes:
+      label: Prioridad
+      options:
+        - Alta
+        - Media
+        - Baja
+    validations:
+      required: false
