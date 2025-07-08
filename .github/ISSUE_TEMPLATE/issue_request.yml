@@ -1,1 +1,27 @@
+name: 🎨 Style Request
+description: Sugerir una mejora visual o de estilo (nombres de variables, formato, legibilidad...)
+title: "[Style] - "
+labels: [style]
+assignees: []
 
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe qué cambio de estilo o mejora visual deseas proponer.
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Propuesta de mejora
+      placeholder: Describe la mejora de estilo que estás sugiriendo.
+    validations:
+      required: true
+
+  - type: textarea
+    id: justification
+    attributes:
+      label: Justificación
+      placeholder: ¿Por qué esta mejora puede ser útil o necesaria?
+    validations:
+      required: false
